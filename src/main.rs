@@ -14,13 +14,15 @@ use utoipa_swagger_ui::SwaggerUi;
 mod user_routes {
     use axum::{Json, Router, routing::{get, post}};
     use serde::{Deserialize, Serialize};
+    use mongodb::{Client, bson::oid::ObjectId, options::ClientOptions};
     use utoipa::ToSchema;
 
 #[derive(Serialize, Deserialize, ToSchema, Debug)]
 #[schema(example = json!({"id": 1, "username": "Teste User 01"}))]
 
     pub struct User {
-        id: u64,
+        #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
+        id: Option<ObjectId>,
         username: String,
     }
     
@@ -42,7 +44,24 @@ mod user_routes {
     async fn create_user(
         Json(new_user): Json<User>,
     ) -> Json<User> {
+
+
         println!("Usuario recebido {:?}", new_user);
+
+        // Configurar a conexão com o MongoDB usar a sua cadeia de conexão
+    let uri = "mongodb+srv://teste_user:9y2WW8fWSkxs8L@cluster0.jseopgc.mongodb.net/?appName=Cluster0";
+    let client_options = ClientOptions::parse(uri).await.unwrap();
+    let client = Client::with_options(client_options).unwrap();
+
+    // Ping no banco de dados para verificar a conexão
+    client.database("admin").run_command(mongodb::bson::doc! { "ping": 1 }).await.unwrap();
+    println!("Ping efetuado com sucesso no MongoDB!");
+    let collection = client.database("myDB").collection::<User>("users");
+
+    collection.insert_one(&new_user).await.unwrap();
+    println!("Inserted a document!");
+
+
         Json(new_user)
     }
 
