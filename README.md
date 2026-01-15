@@ -14,7 +14,7 @@ Este é um projeto de exemplo de uma API RESTful construída com a linguagem **R
 
 Antes de começar, certifique-se de ter o **Rust** e o **Cargo** instalados em sua máquina.
 
-- Instalação do Rust
+- Instalação do Rust verifique no site official: https://rust-lang.org
 
 ## 🛠️ Como Executar
 
