@@ -8,6 +8,8 @@ Este é um projeto de exemplo de uma API RESTful construída com a linguagem **R
 - **Axum**: Framework web ergonômico e modular para Rust.
 - **Tokio**: Runtime assíncrono para Rust.
 - **Serde**: Framework para serialização e desserialização de dados.
+- **MongoDB**: Banco de dados NoSQL utilizado para persistência dos dados.
+- **Tower-HTTP**: Middleware utilizado para configuração de CORS.
 - **Utoipa**: Gerador de documentação OpenAPI (Swagger) para Rust.
 
 ## 📋 Pré-requisitos
@@ -48,5 +50,5 @@ Aqui você poderá visualizar todos os endpoints disponíveis, seus esquemas de 
 - `GET /api/hello`: Retorna uma mensagem de boas-vindas da API.
 
 ### Usuários (`/api/users`)
-- `POST /create_user`: Cria um novo usuário (recebe JSON, retorna JSON).
+- `POST /create_user`: Cria um novo usuário no MongoDB (recebe JSON, retorna JSON).
 - `GET /:id`: Retorna detalhes simulados de um usuário.
